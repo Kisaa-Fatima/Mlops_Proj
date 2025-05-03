@@ -1,0 +1,6 @@
+[core]
+    remote = localremote
+['remote "myremote"']
+    url = gdrive://1crtmYJlf1vXjq5vK-KMqXIdUGzatzRfX
+['remote "localremote"']
+    url = /home/ayera/dvc-storage
