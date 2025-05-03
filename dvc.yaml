@@ -1,8 +1,8 @@
 stages:
   collect:
-    cmd: python collect_weather.py
+    cmd: python collect_weather2.py
     outs:
-      - data/raw_data.csv
+      - data/raw_live_data.csv
 
   preprocess:
     cmd: python preprocess.py
