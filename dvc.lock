@@ -1,0 +1,33 @@
+schema: '2.0'
+stages:
+  collect:
+    cmd: python collect_weather2.py
+    outs:
+    - path: data/raw_live_data.csv
+      hash: md5
+      md5: 6a0ed7f3fa7be55f480043fac696f87c
+      size: 109
+  preprocess:
+    cmd: python preprocess.py
+    deps:
+    - path: data/raw_live_data.csv
+      hash: md5
+      md5: 6a0ed7f3fa7be55f480043fac696f87c
+      size: 109
+    outs:
+    - path: data/processed_data.csv
+      hash: md5
+      md5: 0d1d4f0c82032f3f9f22d1ceee61b1d5
+      size: 106
+  train:
+    cmd: python train_model.py
+    deps:
+    - path: data/processed_data.csv
+      hash: md5
+      md5: 0d1d4f0c82032f3f9f22d1ceee61b1d5
+      size: 106
+    outs:
+    - path: model/model.pkl
+      hash: md5
+      md5: 3b5f04a4896361fe63688b37e15716cb
+      size: 545
