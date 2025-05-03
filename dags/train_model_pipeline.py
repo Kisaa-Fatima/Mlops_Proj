@@ -9,22 +9,18 @@ import logging
 
 # Training function
 def train_model():
-    # Define absolute paths
     processed_data_path = '/home/ayera/airflow/data/processed_data.csv'
     model_path = '/home/ayera/airflow/models/linear_model.pkl'
 
-    # Log setup
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
 
-    # Check if data exists
     if not os.path.exists(processed_data_path):
         logger.error(f"Processed data not found at {processed_data_path}")
         return
 
     df = pd.read_csv(processed_data_path)
 
-    # Check if target column exists
     if 'temperature' not in df.columns:
         logger.error("Target column 'temperature' not found in data.")
         return
@@ -32,14 +28,10 @@ def train_model():
     X = df.drop(columns=['temperature'])
     y = df['temperature']
 
-    # Train model
     model = LinearRegression()
     model.fit(X, y)
 
-    # Ensure model directory exists
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
-
-    # Save model
     joblib.dump(model, model_path)
     logger.info(f"Model trained and saved to: {model_path}")
 
@@ -50,8 +42,8 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-# Define DAG
-dag = DAG(
+# ✅ Use the same variable name as the DAG ID
+weather_model_training = DAG(
     'weather_model_training',
     default_args=default_args,
     description='Train ML model on preprocessed weather data',
@@ -64,6 +56,9 @@ dag = DAG(
 train_model_task = PythonOperator(
     task_id='train_weather_model',
     python_callable=train_model,
-    dag=dag,
+    dag=weather_model_training,
 )
+
+# Expose the DAG explicitly
+globals()['weather_model_training'] = weather_model_training  # This exposes the DAG
 
