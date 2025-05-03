@@ -4,7 +4,7 @@ import os
 
 def preprocess_data():
     # Load the raw data
-    raw_data_path = os.path.join("data", "raw_live_data.csv")
+    raw_data_path = os.path.join("data", "raw_data.csv")
     if not os.path.exists(raw_data_path):
         print(f"Error: Raw data file not found at {raw_data_path}")
         return
@@ -21,8 +21,8 @@ def preprocess_data():
     # Step 2: Normalize numerical columns
     print("Normalizing numerical columns...")
     scaler = MinMaxScaler()
-    df[['temperature', 'wind_speed']] = scaler.fit_transform(df[['temperature', 'wind_speed']])
-
+    #df[['temperature', 'wind_speed']] = scaler.fit_transform(df[['temperature', 'wind_speed']])
+    df[['temperature_2m', 'wind_speed_10m']] = scaler.fit_transform(df[['temperature_2m', 'wind_speed_10m']])
     # Step 3: Save preprocessed data
     processed_data_path = os.path.join("data", "processed_data.csv")
     print(f"Saving preprocessed data to: {processed_data_path}")
