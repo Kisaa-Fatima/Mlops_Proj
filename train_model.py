@@ -15,8 +15,8 @@ data['second'] = data['datetime'].dt.second
 data.drop('datetime', axis=1, inplace=True)  # Drop the original datetime column
 
 # Define X and y
-X = data.drop("temperature", axis=1)  # Features
-y = data["temperature"]  # Target variable (temperature)
+X = data.drop("temperature_2m", axis=1)  # Features
+y = data["temperature_2m"]  # Target variable (temperature)
 
 # Initialize and train the model
 model = LinearRegression()
