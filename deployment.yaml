@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: weather-app1
-        image: localhost:5000/weather-app:latest  # Updated image name
+        image: kisaafatimadocker/weather-app:latest
         ports:
         - containerPort: 80
 ---
